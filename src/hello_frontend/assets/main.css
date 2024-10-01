@@ -1,0 +1,29 @@
+/* Styling for the submit button */
+#submit-btn {
+  border: 2px #617bff solid;
+  color: white;
+  background-color: #617bff;
+  padding: 15px;
+  transition: all 0.2s;
+}
+
+/* Hover effect for the submit button */
+#submit-btn:hover {
+  border: 2px #8095ff solid;
+  background-color: #8095ff;
+}
+
+/* Disabled state for the submit button */
+#submit-btn:disabled {
+  border: 2px rgba(255, 255, 255, 0.1) solid;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Styling for a textarea (not present in your current HTML, but if you add a textarea element with the name "address") */
+textarea[name="address"] {
+  resize: none;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px 2.7rem;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Courier, monospace;
+}
