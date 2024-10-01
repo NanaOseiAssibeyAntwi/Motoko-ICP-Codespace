@@ -1,0 +1,16 @@
+{
+  "name": "Motoko ICP Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "postCreateCommand": "dfx start",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dfinityfoundation.motoko",
+        "ms-vscode.vscode-typescript-tslint-plugin"
+      ]
+    }
+  },
+  "forwardPorts": [8000, 8080],
+  "remoteUser": "vscode",
+  "containerUser": "root"
+}
