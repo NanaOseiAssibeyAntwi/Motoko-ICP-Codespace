@@ -1,78 +1,73 @@
-import Nat "mo:base/Nat";
-import Int "mo:base/Int";
+import Array "mo:base/Array";
+import Buffer "mo:base/Buffer";
 import Float "mo:base/Float";
-import Bool "mo:base/Bool";
-import Char "mo:base/Char";
-import Text "mo:base/Text";
-import Option "mo:base/Option";
 import Debug "mo:base/Debug";
 
 actor Example {
-  // Declare variables of different primitive types
-  let name : Text = "Alice";
-  let age : Nat = 25;
-  let temperature : Int = -3;
-  let pi : Float = 3.14159;
-  let isStudent : Bool = true;
-  let firstLetterOfName : Char = 'A';
-  let email : ?Text = null; // Optional Text
 
-  // A function to display all information
-  public func displayInfo() : async Text {
-    // Handle optional email using Option.unwrapOr
-    let emailInfo : Text = Option.get(email, "Email Not Available");
-
-    let info : Text = "Name: " # name
-    # " age: " # Nat.toText(age)
-    # " temperature: " # Int.toText(temperature)
-    # " height: " # Float.toText(pi)
-    # " Is he a student: " # Bool.toText(isStudent)
-    # " Initial: " # Char.toText(firstLetterOfName)
-    # " email: " # emailInfo;
-
-    return info;
-  };
-
-  public func OddOrEvenChecker(number : Int) : async Text {
-
-    if (number >= 0) {
-      if (number == 0) {
-        return ("Number is Odd");
-      };
-      if (number % 2 == 0) {
-        return ("The number " # Int.toText(number) # " is even ");
-      } else {
-        return ("Number is Odd");
-      };
-    } else {
-      return "Enter a positive number";
-    };
-  };
-
-  let a : Nat = 2;
-  let b : Nat = 2;
-  let sameAB : Bool = (a == b);
-  Debug.print(("A and B are the same: " # Bool.toText(sameAB)));
-
-  stable var currentValue : Float = 100;
-  public func TopUp(amount : Float) : async Float {
-    currentValue += amount;
-    return currentValue;
-  };
-
-  public func WithDraw(amount : Float) : async Float {
-    var adjustedAmount : Float = amount;
-
-    if (amount < 0) {
-      adjustedAmount *= -1;
+  public func project(grades : [Float]) : async Float {
+    var total : Float = 0;
+    for (i in grades.vals()) {
+      total := total + i;
     };
 
-    currentValue -= adjustedAmount;
-    return currentValue;
+    let average : Float = total / Float.fromInt(grades.size());
+    return average;
   };
 
-  public query func CheckBalance() : async Float {
-    return currentValue;
+  public func maxGrade(grades : [Float]) : async Float {
+    var maxNum : Float = 0;
+    for (i in grades.vals()) {
+      if (i > maxNum) {
+        maxNum := i;
+      };
+    };
+    return maxNum;
+  };
+
+  var array1 : [Nat] = [1, 2, 3, 4, 5, 6];
+  var array2 : [Nat] = [8, 9, 10, 11];
+
+  public func addArray(array3 : [Nat], array4 : [Nat]) : async [Nat] {
+    return Array.append(array3, array4);
+  };
+
+  private func _addOne(n : Nat) : Nat {
+    n + 1;
+  };
+
+  public func addOne() : async [Nat] {
+    return Array.map(array1, _addOne);
+  };
+
+  // Buffers IN Motoko
+  let studentNames = Buffer.Buffer<Text>(10);
+  studentNames.add("Osei");
+  public func joinSchool(name : Text) : async Text {
+    studentNames.add("Osei Assibey");
+    studentNames.put(0, "Nana Antwi");
+    return "Welcome to School " # studentNames.get(0);
+  };
+  public func showAllBufferElements() : async [Text] {
+    return Buffer.toArray<Text>(studentNames);
+  };
+  public func removeElement(name : Text) : async [Text] {
+    var counter : Nat = 0;
+    for (element in studentNames.vals()) {
+      if (element == name) {
+        ignore studentNames.remove(counter);
+      };
+      counter := counter + 1;
+    };
+    return Buffer.toArray(studentNames);
+  };
+  var array5 : [var Nat] = [var 1, 2, 3, 4, 5];
+  array5[3] := 9;
+  Debug.print(debug_show (array5[3]));
+
+  var i : Nat = 0;
+  while (i < array5.size()) {
+    Debug.print(debug_show (i));
   };
 
 };
